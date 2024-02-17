@@ -9,9 +9,10 @@ line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 line_parser = WebhookParser(LINE_CHANNEL_SECRET)
 app = FastAPI()
 
-username = None
+username = "None"
 @app.post('/')
 async def kkshk(request: Request):
+    global username
     # X-Line-Signature ヘッダーの値を取得
     signature = request.headers.get('X-Line-Signature', '')
 
@@ -30,7 +31,7 @@ async def kkshk(request: Request):
         line_message = event.message.text
 
         
-        if username == None:
+        if username == "None":
             line_bot_api.push_message(line_user_id, TextSendMessage("初めまして！（これは、名前が登録されていない時のメッセージ）"))
             line_bot_api.push_message(line_user_id, TextSendMessage("あなたが送ったメッセージは「"+line_message+"」です。これをあなたの名前として登録します"))
             username = line_message
