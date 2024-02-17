@@ -2,7 +2,8 @@ from fastapi import FastAPI, Request
 from linebot import WebhookParser, LineBotApi
 from linebot.models import TextSendMessage
 
-
+LINE_CHANNEL_ACCESS_TOKEN = os.getenv("LINE_ACCESS_TOKEN")
+LINE_CHANNEL_SECRET = os.getenv("LINE_SECRET")
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 line_parser = WebhookParser(LINE_CHANNEL_SECRET)
 app = FastAPI()
