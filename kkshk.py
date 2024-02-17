@@ -30,10 +30,10 @@ async def kkshk(request: Request):
         line_message = event.message.text
 
         
-        ai_message = response['choices'][0]['message']['content']
 
         # LINE メッセージの送信
         line_bot_api.push_message(line_user_id, TextSendMessage("喜びなさい故信田"))
-
+        line_bot_api.push_message(line_user_id, TextSendMessage(line_message))
+        
     # LINE Webhook サーバーへ HTTP レスポンスを返す
     return 'ok'
