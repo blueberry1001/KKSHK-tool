@@ -10,7 +10,7 @@ app = FastAPI()
 
 
 @app.post('/')
-async def ai_talk(request: Request):
+async def kkshk(request: Request):
     # X-Line-Signature ヘッダーの値を取得
     signature = request.headers.get('X-Line-Signature', '')
 
