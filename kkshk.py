@@ -39,14 +39,21 @@ async def kkshk(request: Request):
         line_user_id = event.source.user_id
         line_message = event.message.text
 
-        
-        if username == "None":
-            line_bot_api.push_message(line_user_id, TextSendMessage("初めまして！（これは、名前が登録されていない時のメッセージ）"))
-            line_bot_api.push_message(line_user_id, TextSendMessage("あなたが送ったメッセージは「"+line_message+"」です。これをあなたの名前として登録します"))
-            username = line_message
-        else:    
-            line_bot_api.push_message(line_user_id, TextSendMessage("こんにちは、"+username+"さん。"))
-            line_bot_api.push_message(line_user_id, TextSendMessage(line_message+"とはどういう意味でしょうか？"))
+
+        #初回登録判定、どうしようか
+        if username != "default-username":
+            line_bot_api.push_message(line_user_id, TextSendMessage("初めまして！あなたが送ったメッセージをもとに、空白区切りで情報を登録します。"))
+            x = line_message.split()
+            if len(list(line_message().split()))<4:
+                line_bot_api.push_message(line_user_id, TextSendMessage("送られたメッセージが空白区切りで4個以下であるため、登録を行うことができませんでした。"))
+            else:
+                username = x[0]
+                groupname = x[1]
+                place = x[2]
+                teacher = x[3]
+                line_bot_api.push_message(line_user_id, TextSendMessage(f"username:{username},groupname:{groupname},place:{place},teacher:{teacher}として登録したよ"))
+        line_bot_api.push_message(line_user_id, TextSendMessage("こんにちは、"+username+"さん。"))
+        line_bot_api.push_message(line_user_id, TextSendMessage("URLを発行します。"))
         mode = "活動開始"
         no = "いいえ"
         
