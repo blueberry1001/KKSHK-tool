@@ -9,10 +9,19 @@ line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 line_parser = WebhookParser(LINE_CHANNEL_SECRET)
 app = FastAPI()
 
-username = "None"
+username = "default-username"
+groupname = "default-groupname"
+nowtime = 0
+place = "School"
+teacher = "default-teacher"
+
+import urllib.parse
+def tourl(x):
+    return urllib.parse.quote(x)
+
 @app.post('/')
 async def kkshk(request: Request):
-    global username
+    global username,groupname,nowtime,place,teacher
     # X-Line-Signature ヘッダーの値を取得
     signature = request.headers.get('X-Line-Signature', '')
 
@@ -37,8 +46,11 @@ async def kkshk(request: Request):
             username = line_message
         else:    
             line_bot_api.push_message(line_user_id, TextSendMessage("こんにちは、"+username+"さん。"))
-            line_bot_api.push_message(line_user_id, TextSendMessage(line_message+"とはどういう意味でしょうか？"))            
+            line_bot_api.push_message(line_user_id, TextSendMessage(line_message+"とはどういう意味でしょうか？"))
+        mode = "活動開始"
+        no = "いいえ"
         
+        line_bot_api.push_message(line_user_id, TextSendMessage(f"https://docs.google.com/forms/d/e/1FAIpQLSfKyju5yd5Fw08TiEo6Bwe3IO3HTM1gjngvWASKtMR8FpKtuA/viewform?usp=pp_url&entry.998530319={tourl(groupname)}&entry.273281967=2024-02-09&entry.1630282032={tourl(username)}&entry.449921247={tourl(mode)}&entry.1302965683=15:10&entry.2092899857={tourl(place)}&entry.358162710={tourl(teacher)}&entry.841836120={tourl(no)}&entry.1958684523=17:30"))
         
     # LINE Webhook サーバーへ HTTP レスポンスを返す
     return 'ok'
