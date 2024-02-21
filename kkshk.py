@@ -44,7 +44,7 @@ async def kkshk(request: Request):
         if username != "default-usernam" or True:
             line_bot_api.push_message(line_user_id, TextSendMessage("初めまして！あなたが送ったメッセージをもとに、空白区切りで情報を登録します。"))
             x = line_message.split()
-            if len(list(line_message().split()))<4:
+            if len(list(line_message.split()))<4:
                 line_bot_api.push_message(line_user_id, TextSendMessage("送られたメッセージが空白区切りで4個以下であるため、登録を行うことができませんでした。"))
             else:
                 username = x[0]
