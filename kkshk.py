@@ -47,7 +47,7 @@ async def kkshk(request: Request):
             prog += 1
         elif prog == 1:
             #部活名
-            send("次に、部活名を入力してください。")
+            send("次に、場所を入力してください。")
             groupname = line_message
             prog += 1
         elif prog == 2:
