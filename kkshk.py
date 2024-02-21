@@ -14,14 +14,14 @@ groupname = "default-groupname"
 nowtime = 0
 place = "School"
 teacher = "default-teacher"
-
+prog = 0
 import urllib.parse
 def tourl(x):
     return urllib.parse.quote(x)
 
 @app.post('/')
 async def kkshk(request: Request):
-    global username,groupname,nowtime,place,teacher
+    global username,groupname,nowtime,place,teacher,prog
     # X-Line-Signature ヘッダーの値を取得
     signature = request.headers.get('X-Line-Signature', '')
 
@@ -38,8 +38,40 @@ async def kkshk(request: Request):
         # LINE パラメータの取得
         line_user_id = event.source.user_id
         line_message = event.message.text
-
-
+        def send(val):
+            line_bot_api.push_message(line_user_id, TextSendMessage(val))
+        if prog == 0:
+            #名前の登録をする
+            username = line_message
+            send("次に、部活名を入力してください。")
+            prog += 1
+        elif prog == 1:
+            #部活名
+            send("次に、部活名を入力してください。")
+            groupname = line_message
+            prog += 1
+        elif prog == 2:
+            #場所
+            send("最後に、担当教員の名前を入力してください")
+            place = line_message
+            prog += 1
+        elif prog == 3:
+            #先生
+            teacher = line_message
+            send("登録が完了しました。登録をやり直したい場合は、「0」を入力してください。0以外のメッセージを送信すると、自動入力されたリンクを送ります")
+            prog += 1
+        else:
+            if line_message == "0":
+                send("再度登録を行います。名前を入力してください。")
+                prog = 0
+            else:
+                line_bot_api.push_message(line_user_id, TextSendMessage("こんにちは、"+username+"さん。"))
+                line_bot_api.push_message(line_user_id, TextSendMessage("URLを発行します。"))
+                mode = "活動開始"
+                no = "いいえ"
+                line_bot_api.push_message(line_user_id, TextSendMessage(f"https://docs.google.com/forms/d/e/1FAIpQLSfKyju5yd5Fw08TiEo6Bwe3IO3HTM1gjngvWASKtMR8FpKtuA/viewform?usp=pp_url&entry.998530319={tourl(groupname)}&entry.273281967=2024-02-09&entry.1630282032={tourl(username)}&entry.449921247={tourl(mode)}&entry.1302965683=15:10&entry.2092899857={tourl(place)}&entry.358162710={tourl(teacher)}&entry.841836120={tourl(no)}&entry.1958684523=17:30"))
+        
+                
         #初回登録判定、どうしようか
         if username != "default-usernam" or True:
             line_bot_api.push_message(line_user_id, TextSendMessage("初めまして！あなたが送ったメッセージをもとに、空白区切りで情報を登録します。"))
