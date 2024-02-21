@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from linebot import WebhookParser, LineBotApi
 from linebot.models import TextSendMessage
+import datetime
 import os
 
 LINE_CHANNEL_ACCESS_TOKEN = os.getenv("CHANNEL_ACCESS_TOKEN")
@@ -69,7 +70,8 @@ async def kkshk(request: Request):
                 line_bot_api.push_message(line_user_id, TextSendMessage("URLを発行します。"))
                 mode = "活動開始"
                 no = "いいえ"
-                line_bot_api.push_message(line_user_id, TextSendMessage(f"https://docs.google.com/forms/d/e/1FAIpQLSfKyju5yd5Fw08TiEo6Bwe3IO3HTM1gjngvWASKtMR8FpKtuA/viewform?usp=pp_url&entry.998530319={tourl(groupname)}&entry.273281967=2024-02-09&entry.1630282032={tourl(username)}&entry.449921247={tourl(mode)}&entry.1302965683=15:10&entry.2092899857={tourl(place)}&entry.358162710={tourl(teacher)}&entry.841836120={tourl(no)}&entry.1958684523=17:30"))
+                d = datetime.datetime.now()
+                line_bot_api.push_message(line_user_id, TextSendMessage(f"https://docs.google.com/forms/d/e/1FAIpQLSfKyju5yd5Fw08TiEo6Bwe3IO3HTM1gjngvWASKtMR8FpKtuA/viewform?usp=pp_url&entry.998530319={tourl(groupname)}&entry.273281967={tourl(a.day.strftime('%Y-%m-%d'))}&entry.1630282032={tourl(username)}&entry.449921247={tourl(mode)}&entry.1302965683={tourl(a.day.strftime('%H:%M'))}&entry.2092899857={tourl(place)}&entry.358162710={tourl(teacher)}&entry.841836120={tourl(no)}&entry.1958684523={tourl(a.day.strftime('%H:%M'))}"))
         
                 
         
