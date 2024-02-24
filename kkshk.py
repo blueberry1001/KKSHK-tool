@@ -41,6 +41,7 @@ async def kkshk(request: Request):
         line_message = event.message.text
         def send(val):
             line_bot_api.push_message(line_user_id, TextSendMessage(val))
+            return 1
         if prog == 0:
             #名前の登録をする
             username = line_message
