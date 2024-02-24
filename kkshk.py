@@ -3,7 +3,6 @@ from linebot import WebhookParser, LineBotApi
 from linebot.models import TextSendMessage
 import datetime
 import os
-import pytz
 
 LINE_CHANNEL_ACCESS_TOKEN = os.getenv("CHANNEL_ACCESS_TOKEN")
 LINE_CHANNEL_SECRET = os.getenv("CHANNEL_SECRET")
