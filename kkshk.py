@@ -72,8 +72,6 @@ async def kkshk(request: Request):
                 no = "いいえ"
                 d = datetime.datetime.utcnow() # + datetime.timedelta(hours=9)
                 line_bot_api.push_message(line_user_id, TextSendMessage(f"https://docs.google.com/forms/d/e/1FAIpQLSfKyju5yd5Fw08TiEo6Bwe3IO3HTM1gjngvWASKtMR8FpKtuA/viewform?usp=pp_url&entry.998530319={tourl(groupname)}&entry.273281967={tourl(d.strftime('%Y-%m-%d'))}&entry.1630282032={tourl(username)}&entry.449921247={tourl(mode)}&entry.1302965683={tourl(d.strftime('%H:%M'))}&entry.2092899857={tourl(place)}&entry.358162710={tourl(teacher)}&entry.841836120={tourl(no)}&entry.1958684523={tourl(d.strftime('%H:%M'))}"))
-        send("これはちゃんと送れるかどうかテストするメッセージだよ")
-        print("これはログに出力する")
         
     # LINE Webhook サーバーへ HTTP レスポンスを返す
     return 'ok'
