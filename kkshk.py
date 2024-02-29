@@ -16,6 +16,7 @@ nowtime = 0
 place = "School"
 teacher = "default-teacher"
 prog = 0
+dic = {"バドミントン部":"バトミントン部","陸部":"陸上部","陸上競技部":"陸上部","バトミントン":"バトミントン部","男子排球部":"男子バレーボール部","クイ研":"附属クイズ研究部","男子庭球部":"男子テニス部","男バス":"男子バスケットボール部","クイズ研究会":"附属クイズ研究部","男バレ":"男子バレーボール部","かるた":"かるた部","ジャズ研":"JAZZ研究会","jazz研":"JAZZ研究会","jazz研究会:"JAZZ研究会"}
 import urllib.parse
 def tourl(x):
     return urllib.parse.quote(x)
@@ -48,8 +49,9 @@ async def kkshk(request: Request):
             prog += 1
         elif prog == 1:
             #部活名
-            send("次に、場所を入力してください。")
             groupname = line_message
+            send("次に、場所を入力してください。")
+            
             prog += 1
         elif prog == 2:
             #場所
@@ -66,8 +68,7 @@ async def kkshk(request: Request):
                 send("再度登録を行います。名前を入力してください。")
                 prog = 0
             else:
-                line_bot_api.push_message(line_user_id, TextSendMessage("こんにちは、"+username+"さん。"))
-                line_bot_api.push_message(line_user_id, TextSendMessage("URLを発行します。"))
+                send("こんにちは、"+username+"さん。URLを発行します。なお、登録をやり直したい場合は「0」を入力してください。")
                 mode = "活動開始"
                 no = "いいえ"
                 d = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
