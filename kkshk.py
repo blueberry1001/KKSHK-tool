@@ -16,7 +16,7 @@ nowtime = 0
 place = "School"
 teacher = "default-teacher"
 prog = 0
-dic = {"バドミントン部":"バトミントン部","陸部":"陸上部","陸上競技部":"陸上部","バトミントン":"バトミントン部","男子排球部":"男子バレーボール部","クイ研":"附属クイズ研究部","男子庭球部":"男子テニス部","男バス":"男子バスケットボール部","クイズ研究会":"附属クイズ研究部","男バレ":"男子バレーボール部","かるた":"かるた部","ジャズ研":"JAZZ研究会","jazz研":"JAZZ研究会","jazz研究会:"JAZZ研究会"}
+dic = {"バドミントン部":"バトミントン部","陸部":"陸上部","陸上競技部":"陸上部","バトミントン":"バトミントン部","男子排球部":"男子バレーボール部","クイ研":"附属クイズ研究部","男子庭球部":"男子テニス部","男バス":"男子バスケットボール部","クイズ研究会":"附属クイズ研究部","男バレ":"男子バレーボール部","かるた":"かるた部","ジャズ研":"JAZZ研究会","jazz研":"JAZZ研究会","jazz研究会":"JAZZ研究会"}
 import urllib.parse
 def tourl(x):
     return urllib.parse.quote(x)
@@ -49,8 +49,11 @@ async def kkshk(request: Request):
             prog += 1
         elif prog == 1:
             #部活名
-            groupname = line_message
-            send("次に、場所を入力してください。")
+            if line_message in dic:
+                groupname = dic[line_message]
+            else:
+                groupname = line_message
+            send(groupname+"として登録しました。次に、場所を入力してください。")
             
             prog += 1
         elif prog == 2:
